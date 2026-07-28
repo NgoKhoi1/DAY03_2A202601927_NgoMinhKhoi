@@ -1,7 +1,7 @@
 """
 🛠️ TOOL REGISTRY & SCHEMAS (Dành cho Role 2: Tool & Spec Engineer)
 Chủ đề: Chatbot Định Hướng Sự Nghiệp (Career Guidance)
-Các công cụ giúp tra cứu thông tin việc làm, lộ trình nghề nghiệp, kỹ năng, lương, công ty, chứng chỉ, câu hỏi phỏng vấn...
+Các công cụ giúp tra cứu thông tin việc làm, lộ trình nghề nghiệp, kỹ năng, lương, công ty, chứng chỉ, câu hỏi phỏng vấn.....
 Hỗ trợ Smart LLM Fallback sinh dữ liệu động khi thông tin chưa có trong local database.
 """
 
