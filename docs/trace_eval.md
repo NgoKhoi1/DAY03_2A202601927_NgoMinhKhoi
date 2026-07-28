@@ -7,11 +7,11 @@
 
 | Tiêu chí | Điểm (1-5) | Lý do đánh giá |
 | :--- | :---: | :--- |
-| 🧠 **Multi-step Reasoning** | `5/5` | Phân tích kỹ năng, tra cứu yêu cầu thị trường, sau đó đề xuất lộ trình. |
-| 🛠️ **Tool Interaction** | `4/5` | Cần tra cứu Job Description, xu hướng việc làm, khóa học từ database/internet. |
-| 🔀 **Dynamic Decision** | `5/5` | Kết quả gợi ý thay đổi động dựa trên profile, sở thích, điểm mạnh/yếu của user. |
-| ⏳ **Long Horizon** | `4/5` | Cần theo dõi context dài: Hỏi thông tin -> Đánh giá -> Lập lộ trình học tập. |
-| **TỔNG ĐIỂM FIT** | **18/20** | **KẾT LUẬN: BÀI TOÁN RẤT NÊN DÙNG REACT AGENT!** |
+| 🧠 **Multi-step Reasoning** | `5/5` | Cần suy luận nhiều bước: phân tích kỹ năng -> tìm nghề phù hợp -> tra cứu lương -> gợi ý khóa học. |
+| 🛠️ **Tool Interaction** | `4/5` | Cần tra cứu dữ liệu thị trường việc làm, mức lương từ các API/database (vd: LinkedIn, Glassdoor). |
+| 🔀 **Dynamic Decision** | `4/5` | Kết quả ngành nghề tìm được ở bước trước sẽ quyết định việc tra cứu khóa học ở bước sau. |
+| ⏳ **Long Horizon** | `4/5` | Quy trình tư vấn yêu cầu chuỗi các thao tác tra cứu, phân tích và tổng hợp lộ trình dài hạn. |
+| **TỔNG ĐIỂM FIT** | **17/20** | **KẾT LUẬN: BÀI TOÁN RẤT NÊN DÙNG REACT AGENT!** |
 
 ---
 
