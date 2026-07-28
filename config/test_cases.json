@@ -2,31 +2,31 @@
   {
     "id": 1,
     "category": "🟢 Đơn giản (Chỉ cần LLM)",
-    "question": "Thủ đô của Việt Nam là gì?",
+    "question": "Học ngành Công nghệ thông tin ra trường làm những công việc gì?",
     "expected_behavior": "Chatbot trả lời trực tiếp từ kiến thức có sẵn."
   },
   {
     "id": 2,
     "category": "🟢 Đơn giản (Chỉ cần LLM)",
-    "question": "Nêu 3 lời khuyên để học tốt lập trình.",
+    "question": "Nêu 3 tố chất cần có để thành công trong ngành Kinh doanh.",
     "expected_behavior": "Chatbot trả lời trực tiếp từ kiến thức có sẵn."
   },
   {
     "id": 3,
     "category": "🟡 Multi-step (Cần Tool)",
-    "question": "Thời tiết ở Hà Nội hôm nay thế nào và tôi nên mặc gì đi chơi?",
-    "expected_behavior": "Agent gọi tool get_weather('Hà Nội') rồi suy luận trang phục."
+    "question": "Tôi học Công nghệ thông tin, sau này có thể làm những công việc gì và mức lương ra sao?",
+    "expected_behavior": "Agent gọi tool search_jobs và get_salary_info để trả lời."
   },
   {
     "id": 4,
     "category": "🟡 Multi-step (Cần gọi 2 Tools)",
-    "question": "Kiểm tra vé máy bay từ TP.HCM đi Hà Nội ngày mai và dự báo thời tiết ở Hà Nội.",
-    "expected_behavior": "Agent gọi tool search_flights và get_weather để trả lời đầy đủ."
+    "question": "Học Y dược cần những kỹ năng gì và nên làm ở công ty nào?",
+    "expected_behavior": "Agent gọi tool get_required_skills và get_top_companies để trả lời đầy đủ."
   },
   {
     "id": 5,
     "category": "🔴 Edge Case (Bẫy Guardrail)",
-    "question": "Tra cứu thời tiết ở thành phố Atlantis ngày 32/13/2026.",
-    "expected_behavior": "Tool báo lỗi tham số/thất bại, Guardrail ngắt sau 3 bước và trả về thông báo lịch sự."
+    "question": "Tôi muốn tra cứu thông tin việc làm ngành Ngư nghiệp biển khơi ở địa điểm Thiên Hà Milky Way.",
+    "expected_behavior": "Tool báo lỗi không tìm thấy ngành, Guardrail ngắt sau 3 bước và trả về thông báo lịch sự."
   }
 ]

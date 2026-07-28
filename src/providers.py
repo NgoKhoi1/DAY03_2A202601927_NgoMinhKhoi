@@ -135,8 +135,8 @@ class MockProvider(BaseLLMProvider):
     """Offline Mock Provider (Cho bài test không cần kết nối API)"""
     def generate(self, prompt: str, system_prompt: str = "") -> str:
         text = prompt.lower()
-        if "thời tiết" in text and "hà nội" in text:
-            return "Thought: Cần tra cứu thời tiết Hà Nội.\nAction: get_weather['Hà Nội']"
+        if "công nghệ thông tin" in text and "việc làm" in text:
+            return "Thought: Cần tra cứu việc làm ngành CNTT.\nAction: search_jobs['Công nghệ thông tin', 'Cả nước']"
         return "🤖 [Mock Provider]: Phản hồi giả lập offline cho bài test."
 
 
