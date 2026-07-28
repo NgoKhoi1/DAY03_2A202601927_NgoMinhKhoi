@@ -1,7 +1,8 @@
 """
 🛠️ TOOL REGISTRY & SCHEMAS (Dành cho Role 2: Tool & Spec Engineer)
 Chủ đề: Chatbot Định Hướng Sự Nghiệp (Career Guidance)
-Các công cụ giúp tra cứu thông tin việc làm, lộ trình nghề nghiệp, kỹ năng, lương, công ty.
+Các công cụ giúp tra cứu thông tin việc làm, lộ trình nghề nghiệp, kỹ năng, lương, công ty, chứng chỉ, câu hỏi phỏng vấn...
+Hỗ trợ Smart LLM Fallback sinh dữ liệu động khi thông tin chưa có trong local database.
 """
 
 CAREER_DATA = {
@@ -41,114 +42,6 @@ CAREER_DATA = {
         "career_path": "Thực tập -> Phóng viên/Biên tập -> Trưởng ban -> Phó TBT -> Tổng Biên tập"
     }
 }
-
-
-def search_jobs(nganh_nghe: str, dia_diem: str = "Cả nước") -> str:
-    """
-    Tra cứu danh sách công việc theo ngành nghề và địa điểm.
-
-    Args:
-        nganh_nghe (str): Tên ngành nghề (Ví dụ: 'Công nghệ thông tin', 'Kinh doanh', 'Y dược')
-        dia_diem (str): Địa điểm làm việc (Ví dụ: 'Hà Nội', 'TP.HCM', 'Đà Nẵng'). Mặc định: 'Cả nước'
-
-    Returns:
-        str: Danh sách các vị trí công việc phù hợp
-    """
-    key = _normalize_major(nganh_nghe)
-    if key not in CAREER_DATA:
-        return (f"LỖI: Không tìm thấy thông tin ngành nghề '{nganh_nghe}'. "
-                f"Các ngành hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
-
-    data = CAREER_DATA[key]
-    jobs_str = "\n".join(f"  - {job}" for job in data["jobs"])
-    return (f"Việc làm ngành {nganh_nghe.title()} tại {dia_diem}:\n"
-            f"{jobs_str}\n"
-            f"Mức lương tham khảo: {data['salary_range']}")
-
-
-def get_career_path(nganh_hoc: str) -> str:
-    """
-    Tra cứu lộ trình thăng tiến nghề nghiệp theo ngành học.
-
-    Args:
-        nganh_hoc (str): Tên ngành học (Ví dụ: 'Công nghệ thông tin', 'Kinh doanh quản trị')
-
-    Returns:
-        str: Lộ trình nghề nghiệp từ cấp bậc thấp lên cao
-    """
-    key = _normalize_major(nganh_hoc)
-    if key not in CAREER_DATA:
-        return (f"LỖI: Không tìm thấy lộ trình cho ngành '{nganh_hoc}'. "
-                f"Vui lòng chọn: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
-
-    data = CAREER_DATA[key]
-    return (f"Lộ trình nghề nghiệp ngành {nganh_hoc.title()}:\n"
-            f"  {data['career_path']}\n\n"
-            f"Các vị trí phổ biến:\n" +
-            "\n".join(f"  - {job}" for job in data["jobs"]))
-
-
-def get_salary_info(nganh_nghe: str) -> str:
-    """
-    Tra cứu mức lương tham khảo theo ngành nghề.
-
-    Args:
-        nganh_nghe (str): Tên ngành nghề (Ví dụ: 'Công nghệ thông tin', 'Y dược')
-
-    Returns:
-        str: Khoảng lương phổ biến của ngành
-    """
-    key = _normalize_major(nganh_nghe)
-    if key not in CAREER_DATA:
-        return (f"LỖI: Không tìm thấy thông tin lương cho ngành '{nganh_nghe}'. "
-                f"Các ngành hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
-
-    data = CAREER_DATA[key]
-    return (f"Thông tin lương ngành {nganh_nghe.title()}:\n"
-            f"  Khoảng lương: {data['salary_range']}\n"
-            f"  Các vị trí: {', '.join(data['jobs'])}")
-
-
-def get_required_skills(cong_viec: str) -> str:
-    """
-    Tra cứu kỹ năng cần thiết cho một công việc hoặc ngành nghề.
-
-    Args:
-        cong_viec (str): Tên công việc hoặc ngành nghề (Ví dụ: 'Lập trình viên', 'Công nghệ thông tin')
-
-    Returns:
-        str: Danh sách kỹ năng quan trọng cần có
-    """
-    for key, data in CAREER_DATA.items():
-        if _match_job_or_major(cong_viec, key, data):
-            skills_str = "\n".join(f"  - {skill}" for skill in data["skills"])
-            return (f"Các kỹ năng cần thiết cho '{cong_viec.title()}':\n"
-                    f"{skills_str}")
-
-    return (f"LỖI: Không tìm thấy thông tin kỹ năng cho '{cong_viec}'. "
-            f"Các ngành hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
-
-
-def get_top_companies(linh_vuc: str) -> str:
-    """
-    Tra cứu danh sách công ty / tập đoàn hàng đầu trong lĩnh vực.
-
-    Args:
-        linh_vuc (str): Tên lĩnh vực (Ví dụ: 'Công nghệ thông tin', 'Y dược')
-
-    Returns:
-        str: Danh sách các công ty nổi bật
-    """
-    key = _normalize_major(linh_vuc)
-    if key not in CAREER_DATA:
-        return (f"LỖI: Không tìm thấy thông tin công ty cho lĩnh vực '{linh_vuc}'. "
-                f"Các lĩnh vực hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
-
-    data = CAREER_DATA[key]
-    companies_str = "\n".join(f"  - {c}" for c in data["top_companies"])
-    return (f"Các công ty hàng đầu trong lĩnh vực {linh_vuc.title()}:\n"
-            f"{companies_str}")
-
 
 MAJOR_ALIASES = {
     "cong_nghe_thong_tin": ["công nghệ thông tin", "cntt", "it", "lập trình", "phần mềm", "tin học", "informatique"],
@@ -248,6 +141,170 @@ def _match_job_or_major(name: str, key: str, data: dict) -> bool:
     return False
 
 
+def _query_llm_fallback(prompt: str, system_prompt: str = "") -> str:
+    """
+    Gọi LLM Adapter từ providers.py để sinh dữ liệu động khi không tìm thấy trong DB local.
+    """
+    try:
+        from providers import get_llm_provider
+        provider = get_llm_provider()
+        if provider.__class__.__name__ == "MockProvider":
+            return ""
+        default_sys = (
+            "Bạn là một chuyên gia tư vấn hướng nghiệp chuyên nghiệp tại Việt Nam. "
+            "Hãy cung cấp thông tin chính xác, ngắn gọn, súc tích và formatted dạng danh sách gạch đầu dòng."
+        )
+        sys_p = system_prompt or default_sys
+        res = provider.generate(prompt, system_prompt=sys_p)
+        if res and not res.startswith("[") and "Error" not in res and "Exception" not in res:
+            return res.strip()
+    except Exception:
+        pass
+    return ""
+
+
+def search_jobs(nganh_nghe: str, dia_diem: str = "Cả nước") -> str:
+    """
+    Tra cứu danh sách công việc theo ngành nghề và địa điểm.
+
+    Args:
+        nganh_nghe (str): Tên ngành nghề (Ví dụ: 'Công nghệ thông tin', 'Kinh doanh', 'Y dược')
+        dia_diem (str): Địa điểm làm việc (Ví dụ: 'Hà Nội', 'TP.HCM', 'Đà Nẵng'). Mặc định: 'Cả nước'
+
+    Returns:
+        str: Danh sách các vị trí công việc phù hợp
+    """
+    key = _normalize_major(nganh_nghe)
+    if key in CAREER_DATA:
+        data = CAREER_DATA[key]
+        jobs_str = "\n".join(f"  - {job}" for job in data["jobs"])
+        return (f"Việc làm ngành {nganh_nghe.title()} tại {dia_diem}:\n"
+                f"{jobs_str}\n"
+                f"Mức lương tham khảo: {data['salary_range']}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Liệt kê các vị trí việc làm phổ biến và khoảng mức lương trung bình của ngành '{nganh_nghe}' tại {dia_diem}."
+    )
+    if llm_res:
+        return f"Việc làm ngành {nganh_nghe.title()} tại {dia_diem} (Tra cứu AI Live):\n{llm_res}"
+
+    return (f"LỖI: Không tìm thấy thông tin ngành nghề '{nganh_nghe}'. "
+            f"Các ngành hiện có trong DB local: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
+
+
+def get_career_path(nganh_hoc: str) -> str:
+    """
+    Tra cứu lộ trình thăng tiến nghề nghiệp theo ngành học.
+
+    Args:
+        nganh_hoc (str): Tên ngành học (Ví dụ: 'Công nghệ thông tin', 'Kinh doanh quản trị')
+
+    Returns:
+        str: Lộ trình nghề nghiệp từ cấp bậc thấp lên cao
+    """
+    key = _normalize_major(nganh_hoc)
+    if key in CAREER_DATA:
+        data = CAREER_DATA[key]
+        return (f"Lộ trình nghề nghiệp ngành {nganh_hoc.title()}:\n"
+                f"  {data['career_path']}\n\n"
+                f"Các vị trí phổ biến:\n" +
+                "\n".join(f"  - {job}" for job in data["jobs"]))
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Mô tả ngắn gọn lộ trình thăng tiến nghề nghiệp chuẩn từ cấp bậc thấp lên cao cho ngành/vị trí '{nganh_hoc}'."
+    )
+    if llm_res:
+        return f"Lộ trình nghề nghiệp ngành {nganh_hoc.title()} (Tra cứu AI Live):\n{llm_res}"
+
+    return (f"LỖI: Không tìm thấy lộ trình cho ngành '{nganh_hoc}'. "
+            f"Vui lòng chọn: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
+
+
+def get_salary_info(nganh_nghe: str) -> str:
+    """
+    Tra cứu mức lương tham khảo theo ngành nghề.
+
+    Args:
+        nganh_nghe (str): Tên ngành nghề (Ví dụ: 'Công nghệ thông tin', 'Y dược')
+
+    Returns:
+        str: Khoảng lương phổ biến của ngành
+    """
+    key = _normalize_major(nganh_nghe)
+    if key in CAREER_DATA:
+        data = CAREER_DATA[key]
+        return (f"Thông tin lương ngành {nganh_nghe.title()}:\n"
+                f"  Khoảng lương: {data['salary_range']}\n"
+                f"  Các vị trí: {', '.join(data['jobs'])}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Cho biết khoảng mức lương tham khảo theo tháng (VNĐ) tại Việt Nam cho ngành '{nganh_nghe}'."
+    )
+    if llm_res:
+        return f"Thông tin lương ngành {nganh_nghe.title()} (Tra cứu AI Live):\n{llm_res}"
+
+    return (f"LỖI: Không tìm thấy thông tin lương cho ngành '{nganh_nghe}'. "
+            f"Các ngành hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
+
+
+def get_required_skills(cong_viec: str) -> str:
+    """
+    Tra cứu kỹ năng cần thiết cho một công việc hoặc ngành nghề.
+
+    Args:
+        cong_viec (str): Tên công việc hoặc ngành nghề (Ví dụ: 'Lập trình viên', 'Công nghệ thông tin')
+
+    Returns:
+        str: Danh sách kỹ năng quan trọng cần có
+    """
+    for key, data in CAREER_DATA.items():
+        if _match_job_or_major(cong_viec, key, data):
+            skills_str = "\n".join(f"  - {skill}" for skill in data["skills"])
+            return (f"Các kỹ năng cần thiết cho '{cong_viec.title()}':\n"
+                    f"{skills_str}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Liệt kê 5-7 kỹ năng chuyên môn và kỹ năng mềm quan trọng nhất cần có đối với công việc/ngành '{cong_viec}'."
+    )
+    if llm_res:
+        return f"Các kỹ năng cần thiết cho '{cong_viec.title()}' (Tra cứu AI Live):\n{llm_res}"
+
+    return (f"LỖI: Không tìm thấy thông tin kỹ năng cho '{cong_viec}'. "
+            f"Các ngành hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
+
+
+def get_top_companies(linh_vuc: str) -> str:
+    """
+    Tra cứu danh sách công ty / tập đoàn hàng đầu trong lĩnh vực.
+
+    Args:
+        linh_vuc (str): Tên lĩnh vực (Ví dụ: 'Công nghệ thông tin', 'Y dược')
+
+    Returns:
+        str: Danh sách các công ty nổi bật
+    """
+    key = _normalize_major(linh_vuc)
+    if key in CAREER_DATA:
+        data = CAREER_DATA[key]
+        companies_str = "\n".join(f"  - {c}" for c in data["top_companies"])
+        return (f"Các công ty hàng đầu trong lĩnh vực {linh_vuc.title()}:\n"
+                f"{companies_str}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Liệt kê các công ty, tập đoàn lớn hàng đầu đang tuyển dụng tại Việt Nam trong lĩnh vực '{linh_vuc}'."
+    )
+    if llm_res:
+        return f"Các công ty hàng đầu trong lĩnh vực {linh_vuc.title()} (Tra cứu AI Live):\n{llm_res}"
+
+    return (f"LỖI: Không tìm thấy thông tin công ty cho lĩnh vực '{linh_vuc}'. "
+            f"Các lĩnh vực hiện có: {', '.join(k.replace('_', ' ').title() for k in CAREER_DATA)}")
+
+
 def assess_career_suitability(so_thich: str, ky_nang: str) -> str:
     """
     Đánh giá mức độ phù hợp và gợi ý ngành nghề dựa trên sở thích và kỹ năng hiện có.
@@ -273,12 +330,20 @@ def assess_career_suitability(so_thich: str, ky_nang: str) -> str:
     if any(w in input_text for w in ["viết", "content", "báo chí", "quay phim", "truyền thông", "mạng xã hội"]):
         matches.append("Truyền thông & Báo chí (Phù hợp với tư duy sáng tạo & khả năng thể hiện nội dung)")
 
-    if not matches:
-        matches.append("Công nghệ thông tin hoặc Kinh doanh quản trị (Các ngành phổ biến & đa dạng cơ hội)")
+    if matches:
+        results_str = "\n".join(f"  - {m}" for m in matches)
+        return (f"Dựa trên sở thích '{so_thich}' và kỹ năng '{ky_nang}', các ngành gợi ý cho bạn:\n"
+                f"{results_str}")
 
-    results_str = "\n".join(f"  - {m}" for m in matches)
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Phân tích ngắn gọn mức độ phù hợp và đề xuất 2-3 ngành nghề thích hợp nhất dựa trên Sở thích: '{so_thich}' và Kỹ năng hiện có: '{ky_nang}'."
+    )
+    if llm_res:
+        return f"Đánh giá định hướng sự nghiệp (Tra cứu AI Live):\n{llm_res}"
+
     return (f"Dựa trên sở thích '{so_thich}' và kỹ năng '{ky_nang}', các ngành gợi ý cho bạn:\n"
-            f"{results_str}")
+            f"  - Công nghệ thông tin hoặc Kinh doanh quản trị (Các ngành phổ biến & đa dạng cơ hội)")
 
 
 def search_courses(ky_nang: str) -> str:
@@ -297,13 +362,23 @@ def search_courses(ky_nang: str) -> str:
         if k in ky_nang_lower or ky_nang_lower in k:
             found_courses.extend(courses)
 
-    if not found_courses:
-        found_courses = [
-            f"Khóa học chuyên sâu về {ky_nang.title()} trên Coursera",
-            f"Khóa học {ky_nang.title()} thực hành trên Udemy",
-            f"Chứng chỉ chuyên môn về {ky_nang.title()} trên LinkedIn Learning"
-        ]
+    if found_courses:
+        courses_str = "\n".join(f"  - {c}" for c in found_courses)
+        return (f"Gợi ý các khóa học phù hợp cho kỹ năng '{ky_nang.title()}':\n"
+                f"{courses_str}")
 
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Gợi ý 3-4 khóa học hoặc chứng chỉ trực tuyến uy tín (Coursera, Udemy, edX...) để học kỹ năng '{ky_nang}'."
+    )
+    if llm_res:
+        return f"Gợi ý các khóa học phù hợp cho kỹ năng '{ky_nang.title()}' (Tra cứu AI Live):\n{llm_res}"
+
+    found_courses = [
+        f"Khóa học chuyên sâu về {ky_nang.title()} trên Coursera",
+        f"Khóa học {ky_nang.title()} thực hành trên Udemy",
+        f"Chứng chỉ chuyên môn về {ky_nang.title()} trên LinkedIn Learning"
+    ]
     courses_str = "\n".join(f"  - {c}" for c in found_courses)
     return (f"Gợi ý các khóa học phù hợp cho kỹ năng '{ky_nang.title()}':\n"
             f"{courses_str}")
@@ -320,11 +395,24 @@ def recommend_certifications(nganh_nghe: str) -> str:
         str: Danh sách các chứng chỉ hàng đầu
     """
     key = _normalize_major(nganh_nghe)
-    certs = CERTIFICATION_DATA.get(key, [
+    if key in CERTIFICATION_DATA:
+        certs = CERTIFICATION_DATA[key]
+        certs_str = "\n".join(f"  - {c}" for c in certs)
+        return (f"Các chứng chỉ giá trị cho ngành {nganh_nghe.title()}:\n"
+                f"{certs_str}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Gợi ý các chứng chỉ chuyên môn quốc tế và trong nước có giá trị nhất cho ngành nghề '{nganh_nghe}'."
+    )
+    if llm_res:
+        return f"Các chứng chỉ giá trị cho ngành {nganh_nghe.title()} (Tra cứu AI Live):\n{llm_res}"
+
+    certs = [
         f"Chứng chỉ chuyên môn ngành {nganh_nghe.title()} (Quốc tế)",
         "Chứng chỉ Ngoại ngữ (IELTS / TOEIC / JLPT)",
         "Chứng chỉ Quản lý & Kỹ năng mềm"
-    ])
+    ]
     certs_str = "\n".join(f"  - {c}" for c in certs)
     return (f"Các chứng chỉ giá trị cho ngành {nganh_nghe.title()}:\n"
             f"{certs_str}")
@@ -341,11 +429,24 @@ def get_interview_questions(vi_tri_hoac_nganh: str) -> str:
         str: Danh sách các câu hỏi phỏng vấn gợi ý
     """
     key = _normalize_major(vi_tri_hoac_nganh)
-    questions = INTERVIEW_DATA.get(key, [
+    if key in INTERVIEW_DATA:
+        questions = INTERVIEW_DATA[key]
+        q_str = "\n".join(f"  {q}" for q in questions)
+        return (f"Các câu hỏi phỏng vấn thường gặp cho '{vi_tri_hoac_nganh.title()}':\n"
+                f"{q_str}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Liệt kê 3 câu hỏi phỏng vấn phổ biến nhất kèm gợi ý ngắn cho vị trí/ngành '{vi_tri_hoac_nganh}'."
+    )
+    if llm_res:
+        return f"Các câu hỏi phỏng vấn thường gặp cho '{vi_tri_hoac_nganh.title()}' (Tra cứu AI Live):\n{llm_res}"
+
+    questions = [
         f"1. Hãy giới thiệu bản thân và lý do bạn chọn vị trí {vi_tri_hoac_nganh.title()}?",
         f"2. Bạn đã từng đối mặt với khó khăn gì lớn nhất trong công việc và cách vượt qua?",
         f"3. Định hướng nghề nghiệp 3-5 năm tới của bạn là gì?"
-    ])
+    ]
     q_str = "\n".join(f"  {q}" for q in questions)
     return (f"Các câu hỏi phỏng vấn thường gặp cho '{vi_tri_hoac_nganh.title()}':\n"
             f"{q_str}")
@@ -362,11 +463,24 @@ def get_resume_tips(vi_tri_hoac_nganh: str) -> str:
         str: Các lời khuyên tối ưu CV
     """
     key = _normalize_major(vi_tri_hoac_nganh)
-    tips = RESUME_TIPS_DATA.get(key, [
+    if key in RESUME_TIPS_DATA:
+        tips = RESUME_TIPS_DATA[key]
+        tips_str = "\n".join(f"  {t}" for t in tips)
+        return (f"Mẹo viết CV ấn tượng cho ngành '{vi_tri_hoac_nganh.title()}':\n"
+                f"{tips_str}")
+
+    # Dynamic LLM Fallback
+    llm_res = _query_llm_fallback(
+        f"Đưa ra 3 lời khuyên quan trọng nhất để tối ưu CV khi ứng tuyển vào vị trí/ngành '{vi_tri_hoac_nganh}'."
+    )
+    if llm_res:
+        return f"Mẹo viết CV ấn tượng cho ngành '{vi_tri_hoac_nganh.title()}' (Tra cứu AI Live):\n{llm_res}"
+
+    tips = [
         "• Trình bày CV ngắn gọn, súc tích (1-2 trang).",
         "• Sử dụng từ khóa chính liên quan đến mô tả công việc (JD).",
         "• Nêu rõ thành tích và kết quả đạt được bằng con số cụ thể."
-    ])
+    ]
     tips_str = "\n".join(f"  {t}" for t in tips)
     return (f"Mẹo viết CV ấn tượng cho ngành '{vi_tri_hoac_nganh.title()}':\n"
             f"{tips_str}")

@@ -82,6 +82,7 @@ class AnthropicProvider(BaseLLMProvider):
         if not self.api_key or self.api_key == "your_anthropic_api_key_here":
             return "[Anthropic Error]: Chưa cấu hình ANTHROPIC_API_KEY trong file .env!"
         try:
+            # pyrefly: ignore [missing-import]
             import anthropic
             client = anthropic.Anthropic(api_key=self.api_key)
             kwargs = {
@@ -135,8 +136,8 @@ class MockProvider(BaseLLMProvider):
     """Offline Mock Provider (Cho bài test không cần kết nối API)"""
     def generate(self, prompt: str, system_prompt: str = "") -> str:
         text = prompt.lower()
-        if "thời tiết" in text and "hà nội" in text:
-            return "Thought: Cần tra cứu thời tiết Hà Nội.\nAction: get_weather['Hà Nội']"
+        if "công nghệ thông tin" in text and "việc làm" in text:
+            return "Thought: Cần tra cứu việc làm ngành CNTT.\nAction: search_jobs['Công nghệ thông tin', 'Cả nước']"
         return "🤖 [Mock Provider]: Phản hồi giả lập offline cho bài test."
 
 
