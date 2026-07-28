@@ -14,19 +14,19 @@
   {
     "id": 3,
     "category": "🟡 Multi-step (Cần Tool)",
-    "question": "Thời tiết ở Hà Nội hôm nay thế nào và tôi nên mặc gì đi chơi?",
-    "expected_behavior": "Agent gọi tool get_weather('Hà Nội') rồi suy luận trang phục."
+    "question": "Bạn có thể gợi ý lộ trình chuyển sang ngành Công nghệ thông tin nếu tôi có 2 năm kinh nghiệm Python không?",
+    "expected_behavior": "Agent hỏi làm rõ nếu cần, sau đó cung cấp lộ trình học tập và kỹ năng phù hợp."
   },
   {
     "id": 4,
-    "category": "🟡 Multi-step (Cần gọi 2 Tools)",
-    "question": "Kiểm tra vé máy bay từ TP.HCM đi Hà Nội ngày mai và dự báo thời tiết ở Hà Nội.",
-    "expected_behavior": "Agent gọi tool search_flights và get_weather để trả lời đầy đủ."
+    "category": "🟡 Multi-step (Cần Tool)",
+    "question": "Hãy tìm công việc ngành Marketing tại Hà Nội và gợi ý kỹ năng cần bổ sung.",
+    "expected_behavior": "Agent gọi tool search_jobs và get_required_skills hoặc assess_career_suitability để trả lời."
   },
   {
     "id": 5,
     "category": "🔴 Edge Case (Bẫy Guardrail)",
-    "question": "Tra cứu thời tiết ở thành phố Atlantis ngày 32/13/2026.",
-    "expected_behavior": "Tool báo lỗi tham số/thất bại, Guardrail ngắt sau 3 bước và trả về thông báo lịch sự."
+    "question": "Em muốn tìm việc trong ngành Không tồn tại tại Mặt Trăng.",
+    "expected_behavior": "Tool báo lỗi không tìm thấy ngành, Agent phải fallback an toàn và đề xuất chọn ngành khác."
   }
 ]

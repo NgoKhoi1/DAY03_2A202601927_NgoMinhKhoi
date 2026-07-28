@@ -41,7 +41,7 @@ Nếu cần lộ trình nhanh ngay bây giờ:
 - Trung hạn (3-9 tháng): Học ML cơ bản, xây pipeline end-to-end, publish project lên GitHub.
 - Dài hạn (9-18 tháng): Hoàn thiện portfolio, chuẩn bị phỏng vấn kỹ thuật, ứng tuyển vị trí Junior Data Scientist.
 
-Gợi ý: nếu bạn muốn có kết quả grounded (ví dụ danh sách job real), hãy sử dụng Agent có tool `search_job_listings` (do Role 2 cung cấp) hoặc yêu cầu tôi giúp soạn truy vấn để Agent thực thi.
+Gợi ý: nếu bạn muốn có kết quả grounded (ví dụ danh sách job real), hãy sử dụng Agent có tool `search_jobs` (do Role 2 cung cấp) hoặc yêu cầu tôi giúp soạn truy vấn để Agent thực thi.
 """
 
 # ReAct Agent Prompt (Ép LLM suy luận theo chuỗi Thought -> Action)
