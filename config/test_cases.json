@@ -1,32 +1,32 @@
 [
   {
     "id": 1,
-    "category": "🟢 Đơn giản (Chỉ cần LLM)",
-    "question": "Thủ đô của Việt Nam là gì?",
-    "expected_behavior": "Chatbot trả lời trực tiếp từ kiến thức có sẵn."
+    "category": " Đơn giản (Chỉ cần LLM)",
+    "question": "Nghề Data Analyst là làm những công việc gì?",
+    "expected_behavior": "Chatbot trả lời trực tiếp khái niệm và nhiệm vụ công việc từ kiến thức có sẵn."
   },
   {
     "id": 2,
-    "category": "🟢 Đơn giản (Chỉ cần LLM)",
-    "question": "Nêu 3 lời khuyên để học tốt lập trình.",
-    "expected_behavior": "Chatbot trả lời trực tiếp từ kiến thức có sẵn."
+    "category": " Đơn giản (Chỉ cần LLM)",
+    "question": "Cho tôi 3 lời khuyên để chuẩn bị tốt trước khi đi phỏng vấn xin việc.",
+    "expected_behavior": "Chatbot trả lời trực tiếp các kỹ năng mềm từ kiến thức có sẵn."
   },
   {
     "id": 3,
-    "category": "🟡 Multi-step (Cần Tool)",
-    "question": "Thời tiết ở Hà Nội hôm nay thế nào và tôi nên mặc gì đi chơi?",
-    "expected_behavior": "Agent gọi tool get_weather('Hà Nội') rồi suy luận trang phục."
+    "category": " Multi-step (Cần Tool)",
+    "question": "Tôi thích làm việc với số liệu và tư duy logic, ngành nghề nào phù hợp với tôi và mức lương trung bình hiện nay thế nào?",
+    "expected_behavior": "Agent gọi tool assess_career_fit và search_job_market để phân tích ngành phù hợp và tra cứu mức lương."
   },
   {
     "id": 4,
-    "category": "🟡 Multi-step (Cần gọi 2 Tools)",
-    "question": "Kiểm tra vé máy bay từ TP.HCM đi Hà Nội ngày mai và dự báo thời tiết ở Hà Nội.",
-    "expected_behavior": "Agent gọi tool search_flights và get_weather để trả lời đầy đủ."
+    "category": " Multi-step (Cần gọi 2-3 Tools)",
+    "question": "Tôi đang làm Kế toán nhưng muốn chuyển sang làm AI Engineer, hãy tra cứu nhu cầu tuyển dụng ngành AI hiện nay và gợi ý lộ trình các khóa học/chứng chỉ tôi cần học.",
+    "expected_behavior": "Agent gọi tool search_job_market và recommend_learning_roadmap để tư vấn nhu cầu tuyển dụng và lập lộ trình học tập."
   },
   {
     "id": 5,
-    "category": "🔴 Edge Case (Bẫy Guardrail)",
-    "question": "Tra cứu thời tiết ở thành phố Atlantis ngày 32/13/2026.",
-    "expected_behavior": "Tool báo lỗi tham số/thất bại, Guardrail ngắt sau 3 bước và trả về thông báo lịch sự."
+    "category": " Edge Case (Bẫy Guardrail)",
+    "question": "Tra cứu mức lương và danh sách khóa học để trở thành Phi hành gia vũ trụ thương mại làm việc tại Hà Nội năm 2026.",
+    "expected_behavior": "Tool báo lỗi tham số/không tìm thấy dữ liệu phù hợp, Guardrail ngắt sau 3 bước và trả về thông báo từ chối lịch sự."
   }
 ]
