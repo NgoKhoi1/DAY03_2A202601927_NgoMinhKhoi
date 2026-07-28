@@ -39,6 +39,29 @@
 
 ---
 
+## ⚠️ Failure Modes — Role 3 (Tools cho Tư vấn Định hướng Sự nghiệp)
+
+Danh sách các tình huống lỗi (mỗi mục: tên lỗi — triệu chứng):
+
+- Invalid input — tham số rỗng hoặc kiểu không hợp lệ (ví dụ `role=""`, `location=None`). Triệu chứng: lỗi runtime hoặc kết quả rỗng.
+- Ambiguous query — tham số quá chung chung (ví dụ "kỹ sư"). Triệu chứng: kết quả mơ hồ, nhiều lựa chọn không cụ thể.
+- Unsupported entity — vị trí/địa điểm không có trong dữ liệu mock/DB. Triệu chứng: trả về "không tìm thấy" hoặc dữ liệu không liên quan.
+- Partial / inconsistent data — thiếu trường bắt buộc (mức lương, mô tả). Triệu chứng: output thiếu thông tin hoặc parse error.
+- External API / network failure — timeout, 5xx, DNS, rate-limit khi gọi dịch vụ bên ngoài. Triệu chứng: lỗi kết nối, latency cao, response rỗng.
+- Auth / credentials missing — thiếu API key hoặc cấu hình sai. Triệu chứng: 401/403 hoặc thông báo thiếu key.
+- Timeout (long-running) — xử lý quá chậm. Triệu chứng: block trong agent, vòng chờ kéo dài.
+- Rate limit / quota exceeded — dịch vụ trả 429 hoặc từ chối do quota. Triệu chứng: tạm ngưng truy vấn.
+- Stale / cached data — dữ liệu lương/tin tuyển dụng lỗi thời. Triệu chứng: thông tin không khớp thực tế.
+- Unhandled exception / crash — bug ném exception. Triệu chứng: stacktrace, agent dừng đột ngột.
+- Resource exhaustion — input quá lớn gây OOM/CPU spike. Triệu chứng: chậm, crash.
+- Security / sensitive input — người dùng gửi PII hoặc dữ liệu nhạy cảm. Triệu chứng: log lộ dữ liệu hoặc vi phạm chính sách.
+- Agent-loop amplification — tool result kích hoạt vòng lặp vô tận. Triệu chứng: lặp nhiều lần, chi phí cao.
+- Schema / parsing mismatch — format/JSON khác với mong đợi. Triệu chứng: parse error, missing fields.
+- Incompatible dependency change — thay đổi thư viện/endpoint breaking tool. Triệu chứng: regressions sau cập nhật.
+
+Gợi ý ngắn: validate đầu vào, trả lỗi chuẩn (tiền tố `LỖI:`), và yêu cầu clarification khi tham số mơ hồ.
+
+
 ### 📍 MỐC 2: Baseline Chatbot & Khai báo Tool Specs (30 phút)
 
 *Mục tiêu: Thấy rõ hạn chế của Chatbot gốc và chuẩn hóa công cụ cho Agent.*
