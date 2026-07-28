@@ -91,4 +91,8 @@ Hãy cho tôi biết nếu bạn cần thêm thông tin hoặc hỗ trợ! "
 
 * **Thought 2**: Đã có danh sách việc làm, giờ tra cứu mức lương.
 * **Final Answer**: Ngành Công nghệ thông tin có nhiều cơ hội việc làm như Lập trình viên, Kỹ sư phần mềm, Chuyên gia AI/ML với mức lương từ 15,000,000 - 50,000,000 VNĐ/tháng. Bạn nên trang bị kỹ năng Python, JavaScript, SQL và Machine Learning để có lợi thế cạnh tranh!
+* Observation:
+  Thông tin lương ngành Công Nghệ Thông Tin:
+  Khoảng lương: 15,000,000 - 50,000,000 VNĐ/tháng
+  Các vị trí: Lập trình viên, Kỹ sư phần mềm, Chuyên gia AI/ML, Kỹ sư dữ liệu
 * **Nhận xét**: Hoàn thành xuất sắc nhiệm vụ nhờ sự kết hợp giữa suy luận và công cụ.
