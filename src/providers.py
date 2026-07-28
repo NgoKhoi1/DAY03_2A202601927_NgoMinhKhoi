@@ -82,6 +82,7 @@ class AnthropicProvider(BaseLLMProvider):
         if not self.api_key or self.api_key == "your_anthropic_api_key_here":
             return "[Anthropic Error]: Chưa cấu hình ANTHROPIC_API_KEY trong file .env!"
         try:
+            # pyrefly: ignore [missing-import]
             import anthropic
             client = anthropic.Anthropic(api_key=self.api_key)
             kwargs = {
